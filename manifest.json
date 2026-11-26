@@ -1,0 +1,121 @@
+{
+  "manifest_version": 3,
+  "name": "AdShield",
+  "version": "1.0.2",
+  "description": "Blocks ads, pop-ups, forced redirects, malicious scripts and trackers.",
+
+  "minimum_chrome_version": "111",
+
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+
+  "action": {
+    "default_title": "AdShield",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "activeTab",
+    "contentSettings"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "rules/ad-rules.json"
+      }
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/anti-redirect.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN",
+      "match_about_blank": true
+    },
+
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/content.js",
+        "content/element-blocker.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "content/youtube-main.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "content/youtube.js"
+      ],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": [
+        "*://www.facebook.com/*",
+        "*://web.facebook.com/*"
+      ],
+      "js": [
+        "content/facebook.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/blocked.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

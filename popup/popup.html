@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="theme-color" content="#0B7A5E">
+
+    <title>AdShield</title>
+
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="brand">
+        <h1>AdShield</h1>
+        <p id="host" class="host">Loading website...</p>
+    </div>
+
+    <label class="switch" title="Turn AdShield on or off everywhere">
+        <input
+            type="checkbox"
+            id="master"
+            role="switch"
+            aria-label="Enable AdShield globally"
+        >
+        <span class="track"></span>
+    </label>
+</header>
+
+<main>
+
+    <!-- BLOCKING STATISTICS -->
+
+    <section class="tally" aria-live="polite">
+
+        <div class="count" id="total">0</div>
+
+        <p class="count-label">blocked on this page</p>
+
+        <div class="bar" id="bar" aria-label="Blocking statistics">
+            <span class="seg net" id="seg-net"></span>
+            <span class="seg dom" id="seg-dom"></span>
+            <span class="seg hij" id="seg-hij"></span>
+            <span class="seg yt" id="seg-yt"></span>
+        </div>
+
+        <ul class="breakdown">
+
+            <li>
+                <span class="dot net"></span>
+                <span class="name">Network requests</span>
+                <span class="num" id="n-net">0</span>
+            </li>
+
+            <li>
+                <span class="dot dom"></span>
+                <span class="name">Hidden elements</span>
+                <span class="num" id="n-dom">0</span>
+            </li>
+
+            <li>
+                <span class="dot hij"></span>
+                <span class="name">Pop-ups and redirects</span>
+                <span class="num" id="n-hij">0</span>
+            </li>
+
+            <li>
+                <span class="dot yt"></span>
+                <span class="name">YouTube ads</span>
+                <span class="num" id="n-yt">0</span>
+            </li>
+
+        </ul>
+
+    </section>
+
+    <!-- BLOCKED ATTEMPTS -->
+
+    <section class="panel" id="attempts-wrap" hidden>
+
+        <h2>Blocked attempts</h2>
+
+        <p class="hint">
+            Review suspicious domains detected on this page.
+        </p>
+
+        <ul class="list" id="attempts"></ul>
+
+    </section>
+
+    <!-- PROTECTION SETTINGS -->
+
+    <section class="settings">
+
+        <label class="row">
+            <span class="label">Protect this site</span>
+
+            <span class="switch">
+                <input type="checkbox" id="site" role="switch">
+                <span class="track"></span>
+            </span>
+        </label>
+
+        <label class="row">
+            <span class="label">Strict redirect blocking</span>
+
+            <span class="switch">
+                <input type="checkbox" id="strict" role="switch">
+                <span class="track"></span>
+            </span>
+        </label>
+
+        <label class="row">
+            <span class="label">Block notification prompts</span>
+
+            <span class="switch">
+                <input type="checkbox" id="notif" role="switch">
+                <span class="track"></span>
+            </span>
+        </label>
+
+        <label class="row">
+            <span class="label">Skip YouTube ads</span>
+
+            <span class="switch">
+                <input type="checkbox" id="yt" role="switch">
+                <span class="track"></span>
+            </span>
+        </label>
+
+    </section>
+
+    <!-- CUSTOM BLOCKED DOMAINS -->
+
+    <details class="panel" id="custom">
+
+        <summary>Blocked domains</summary>
+
+        <div class="add">
+
+            <input
+                type="text"
+                id="domain"
+                placeholder="example.com"
+                autocomplete="off"
+                spellcheck="false"
+                aria-label="Domain to block"
+                maxlength="253"
+            >
+
+            <button type="button" id="add">
+                Block
+            </button>
+
+        </div>
+
+        <p class="hint" id="msg" role="status" hidden></p>
+
+        <ul class="list" id="custom-list"></ul>
+
+    </details>
+
+    <!-- UNSUPPORTED PAGE NOTICE -->
+
+    <p class="note" id="note" hidden>
+        AdShield can't run on this kind of page.
+        Open a regular website to use protection.
+    </p>
+
+</main>
+
+<footer class="footer">
+    <span>Protected by AdShield</span>
+    <span id="version">Version 1.0.0</span>
+</footer>
+
+<script src="popup.js"></script>
+
+</body>
+</html>

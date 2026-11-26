@@ -1,0 +1,9 @@
+'use strict';
+
+document.getElementById('back').addEventListener('click', () => {
+    if (history.length > 1) {
+        history.back();
+    } else {
+        window.close();
+    }
+});
