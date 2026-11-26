@@ -41,6 +41,20 @@
     return root;
   }
 
+  // Properties YouTube's ad-blocker detection reads: make them report "no ad blocker found".
+  // (Untested against YouTube's current code; if it ever causes trouble, delete this block.)
+  function defineConstant(name, value) {
+    try {
+      Object.defineProperty(Object.prototype, name, {
+        configurable: true,
+        get() { return active ? value : undefined; },
+        set() {}
+      });
+    } catch (_) {}
+  }
+  defineConstant('adBlocksFound', 0);
+  defineConstant('hasAllowedInstreamAd', true);
+
   // 1. Anything YouTube parses with JSON.parse (XHR, inline data).
   const nativeParse = JSON.parse;
   JSON.parse = function () {
